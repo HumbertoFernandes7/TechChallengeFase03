@@ -1,0 +1,21 @@
+package com.fiap.techchallenge.agendamento.dtos;
+
+import com.fiap.techchallenge.agendamento.entities.TipoUsuario;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class UserResponse {
+
+    private Long id;
+
+    private String nome;
+
+    private String email;
+
+    private String senha;
+
+    private TipoUsuario tipoUsuario;
+
+}
