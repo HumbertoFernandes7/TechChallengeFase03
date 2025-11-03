@@ -5,6 +5,7 @@ import com.fiap.techchallenge.agendamento.repositories.UserRepository;
 import com.fiap.techchallenge.agendamento.services.validations.user.UserCreateValidation;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,11 +15,12 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
-
     private final List<UserCreateValidation>  validarCadastro;
+    private final PasswordEncoder passwordEncoder;
 
     public UserEntity create(UserEntity user){
         validarCadastro.forEach(v -> v.valida(user));
+        user.setSenha(passwordEncoder.encode(user.getSenha()));
         return userRepository.save(user);
     }
 
