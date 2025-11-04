@@ -1,6 +1,6 @@
 package com.fiap.techchallenge.agendamento.dtos;
 
-import com.fiap.techchallenge.agendamento.entities.TipoUsuario;
+import com.fiap.techchallenge.agendamento.enums.TipoUsuario;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

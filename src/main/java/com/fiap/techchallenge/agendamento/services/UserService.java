@@ -29,11 +29,11 @@ public class UserService {
     }
 
     public UserEntity findById(Long id){
-        return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));
+        return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado no sistema"));
     }
 
     public UserEntity findByEmail(String email){
-        return userRepository.findByEmail(email).orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));
+        return userRepository.findByEmail(email).orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado no sistema"));
     }
 
     public List<UserEntity> findAll(){

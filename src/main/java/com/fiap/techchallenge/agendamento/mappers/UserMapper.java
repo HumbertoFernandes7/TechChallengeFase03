@@ -4,12 +4,12 @@ import com.fiap.techchallenge.agendamento.dtos.UserRequest;
 import com.fiap.techchallenge.agendamento.dtos.UserResponse;
 import com.fiap.techchallenge.agendamento.dtos.UserUpdateRequest;
 import com.fiap.techchallenge.agendamento.entities.UserEntity;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -26,7 +26,7 @@ public class UserMapper {
     }
 
     public List<UserResponse> listEntityToListResponse(List<UserEntity> users) {
-        return users.stream().map(this::toResponse).toList();
+        return users.stream().map(this::toResponse).collect(Collectors.toList());
     }
 
     public void copyInputToEntity(UserUpdateRequest updateRequest, UserEntity usuarioEncontrado) {

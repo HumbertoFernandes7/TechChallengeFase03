@@ -1,4 +1,4 @@
-package com.fiap.techchallenge.agendamento.entities;
+package com.fiap.techchallenge.agendamento.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

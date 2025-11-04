@@ -1,5 +1,6 @@
 package com.fiap.techchallenge.agendamento.entities;
 
+import com.fiap.techchallenge.agendamento.enums.TipoUsuario;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;

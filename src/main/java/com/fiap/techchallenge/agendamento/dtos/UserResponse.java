@@ -1,6 +1,6 @@
 package com.fiap.techchallenge.agendamento.dtos;
 
-import com.fiap.techchallenge.agendamento.entities.TipoUsuario;
+import com.fiap.techchallenge.agendamento.enums.TipoUsuario;
 import lombok.Getter;
 import lombok.Setter;
 
