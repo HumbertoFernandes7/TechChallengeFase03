@@ -24,7 +24,7 @@ public class ConsultaService {
     private final List<ConsultaCreateValidation> validarCadastro;
     private final List<ConsultaUpdateValidation> validarUpdate;
 
-    private final NotificationService notificationService;
+    private final NotificationSenderService notificationService;
 
     @Transactional
     public ConsultaEntity create(ConsultaEntity consultaEntity, UserEntity medico, UserEntity paciente) {

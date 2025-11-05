@@ -11,10 +11,10 @@ import org.slf4j.LoggerFactory;
 
 @Service
 @RequiredArgsConstructor
-public class NotificationService {
+public class NotificationSenderService {
 
     public static final String CONSULTA_QUEUE_NAME = "fila.consultas.notificacao";
-    private static final Logger logger = LoggerFactory.getLogger(NotificationService.class);
+    private static final Logger logger = LoggerFactory.getLogger(NotificationSenderService.class);
 
     private final RabbitTemplate rabbitTemplate;
 
