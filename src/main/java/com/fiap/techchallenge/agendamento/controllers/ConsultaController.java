@@ -11,6 +11,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class ConsultaController {
     private final ConsultaMapper consultaMapper;
     private final UserService userService;
 
+    @PreAuthorize("hasAnyRole('MEDICO', 'ENFERMEIRO')")
     @PostMapping("/create")
     public ResponseEntity<ConsultaResponse> create(@RequestBody @Valid ConsultaRequest consultaRequest){
        UserEntity medico = userService.findById(consultaRequest.getIdMedico());
@@ -44,6 +46,7 @@ public class ConsultaController {
         return ResponseEntity.ok(consultaMapper.listEntityToListResponse(consultaService.findAll()));
     }
 
+    @PreAuthorize("hasAnyRole('MEDICO', 'ENFERMEIRO')")
     @PutMapping("/{id}")
     public ResponseEntity<ConsultaResponse> update(@PathVariable Long id, @RequestBody @Valid ConsultaRequest consultaRequest) {
         ConsultaEntity consultaEncontrada = consultaService.findById(id);
@@ -54,6 +57,7 @@ public class ConsultaController {
         return ResponseEntity.ok(consultaMapper.toResponse(consultaAtualizada));
     }
 
+    @PreAuthorize("hasAnyRole('MEDICO', 'ENFERMEIRO')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){
         consultaService.findById(id);
@@ -61,6 +65,7 @@ public class ConsultaController {
         return ResponseEntity.noContent().build();
     }
 
+    @PreAuthorize("hasAnyRole('MEDICO', 'ENFERMEIRO')")
     @PatchMapping("/{id}/realizar")
     public ResponseEntity<Void> realizar(@PathVariable Long id) {
         ConsultaEntity consultaEncontrada = consultaService.findById(id);

@@ -10,6 +10,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,6 +30,7 @@ public class UserController {
        return ResponseEntity.status(HttpStatus.CREATED).body(userMapper.toResponse(usuarioSalvo));
     }
 
+    @PreAuthorize("hasAnyRole('MEDICO', 'ENFERMEIRO')")
     @PutMapping("/{id}")
     public ResponseEntity<UserResponse> update(@RequestBody @Valid UserUpdateRequest updateRequest, @PathVariable Long id) {
         UserEntity usuarioEncontrado = userService.findById(id);
@@ -37,12 +39,14 @@ public class UserController {
         return ResponseEntity.ok(userMapper.toResponse(usuarioSalvo));
     }
 
+    @PreAuthorize("hasAnyRole('MEDICO', 'ENFERMEIRO')")
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> findById(@PathVariable Long id) {
         UserEntity user = userService.findById(id);
         return ResponseEntity.ok(userMapper.toResponse(user));
     }
 
+    @PreAuthorize("hasAnyRole('MEDICO', 'ENFERMEIRO')")
     @GetMapping
     public ResponseEntity<List<UserResponse>> findAll() {
         List<UserEntity> users = userService.findAll();
@@ -50,6 +54,7 @@ public class UserController {
         return ResponseEntity.ok(userResponses);
     }
 
+    @PreAuthorize("hasRole('MEDICO')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         userService.findById(id);

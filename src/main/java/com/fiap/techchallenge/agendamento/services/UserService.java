@@ -5,9 +5,12 @@ import com.fiap.techchallenge.agendamento.repositories.UserRepository;
 import com.fiap.techchallenge.agendamento.services.validations.user.UserCreateValidation;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 
 @Service
@@ -26,6 +29,15 @@ public class UserService {
 
     public UserEntity update(UserEntity user){
         return userRepository.save(user);
+    }
+
+    public UserEntity getUserLogado() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null || !auth.isAuthenticated() || auth.getName().equals("anonymousUser")) {
+            throw new RuntimeException("Usuário não autenticado. Não é possível realizar esta operação.");
+        }
+        String email = auth.getName();
+        return this.findByEmail(email);
     }
 
     public UserEntity findById(Long id){

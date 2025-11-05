@@ -3,6 +3,7 @@ package com.fiap.techchallenge.agendamento.services;
 import com.fiap.techchallenge.agendamento.entities.ConsultaEntity;
 import com.fiap.techchallenge.agendamento.entities.UserEntity;
 import com.fiap.techchallenge.agendamento.enums.StatusConsulta;
+import com.fiap.techchallenge.agendamento.enums.TipoUsuario;
 import com.fiap.techchallenge.agendamento.repositories.ConsultaRepository;
 import com.fiap.techchallenge.agendamento.services.validations.consulta.ConsultaCreateValidation;
 import com.fiap.techchallenge.agendamento.services.validations.consulta.ConsultaUpdateValidation;
@@ -18,6 +19,7 @@ import java.util.List;
 public class ConsultaService {
 
     private final ConsultaRepository consultaRepository;
+    private final UserService userService;
     private final List<ConsultaCreateValidation> validarCadastro;
     private final List<ConsultaUpdateValidation> validarUpdate;
 
@@ -36,7 +38,11 @@ public class ConsultaService {
     }
 
     public List<ConsultaEntity> findAll(){
-        return consultaRepository.findAll();
+        UserEntity usuarioLogado = userService.getUserLogado();
+        if(usuarioLogado.getTipoUsuario() != TipoUsuario.PACIENTE){
+            return consultaRepository.findAll();
+        }
+        return consultaRepository.findAllByPaciente(usuarioLogado);
     }
 
     public ConsultaEntity update(ConsultaEntity consultaEntity, UserEntity medico, UserEntity paciente){
