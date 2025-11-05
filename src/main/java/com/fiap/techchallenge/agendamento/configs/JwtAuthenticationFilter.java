@@ -1,5 +1,6 @@
 package com.fiap.techchallenge.agendamento.configs;
 
+import com.fiap.techchallenge.agendamento.exception.NotFoundBusinessException;
 import com.fiap.techchallenge.agendamento.repositories.UserRepository;
 import com.fiap.techchallenge.agendamento.services.TokenService;
 import jakarta.servlet.FilterChain;
@@ -31,7 +32,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             if (!subject.isEmpty()) {
                 UserDetails user = userRepository.findByEmail(subject)
-                        .orElseThrow(() -> new RuntimeException("Usuário não encontrado no token"));
+                        .orElseThrow(() -> new NotFoundBusinessException("Usuário não encontrado no token"));
 
                 // Cria a autenticação para o Spring Security
                 var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());

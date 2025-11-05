@@ -3,6 +3,7 @@ package com.fiap.techchallenge.agendamento.controllers;
 import com.fiap.techchallenge.agendamento.dtos.LoginRequest;
 import com.fiap.techchallenge.agendamento.dtos.LoginResponse;
 import com.fiap.techchallenge.agendamento.entities.UserEntity;
+import com.fiap.techchallenge.agendamento.exception.InvalidCredentialsBusinessException;
 import com.fiap.techchallenge.agendamento.services.TokenService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,20 +27,20 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody @Valid LoginRequest loginRequest) {
         try {
-        var usernamePassword = new UsernamePasswordAuthenticationToken(
-                loginRequest.getEmail(),
-                loginRequest.getSenha()
-        );
-        Authentication auth = authenticationManager.authenticate(usernamePassword);
+            var usernamePassword = new UsernamePasswordAuthenticationToken(
+                    loginRequest.getEmail(),
+                    loginRequest.getSenha()
+            );
+            Authentication auth = authenticationManager.authenticate(usernamePassword);
 
-        UserEntity user = (UserEntity) auth.getPrincipal();
+            UserEntity user = (UserEntity) auth.getPrincipal();
 
-        String token = tokenService.generateToken(user);
+            String token = tokenService.generateToken(user);
 
-        return ResponseEntity.ok(new LoginResponse(token));
+            return ResponseEntity.ok(new LoginResponse(token));
 
         } catch (Exception e) {
-            throw new RuntimeException("Email ou senha inválidos!");
+            throw new InvalidCredentialsBusinessException("Email ou senha inválidos!");
         }
     }
 }
