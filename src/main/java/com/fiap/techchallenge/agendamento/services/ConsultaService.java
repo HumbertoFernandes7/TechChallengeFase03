@@ -5,10 +5,10 @@ import com.fiap.techchallenge.agendamento.entities.UserEntity;
 import com.fiap.techchallenge.agendamento.enums.StatusConsulta;
 import com.fiap.techchallenge.agendamento.enums.TipoUsuario;
 import com.fiap.techchallenge.agendamento.exception.NotFoundBusinessException;
+import com.fiap.techchallenge.agendamento.exception.UnauthorizedAccessBusinessException;
 import com.fiap.techchallenge.agendamento.repositories.ConsultaRepository;
 import com.fiap.techchallenge.agendamento.services.validations.consulta.ConsultaCreateValidation;
 import com.fiap.techchallenge.agendamento.services.validations.consulta.ConsultaUpdateValidation;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -34,8 +34,16 @@ public class ConsultaService {
     }
 
     public ConsultaEntity findById(Long id){
-        return consultaRepository.findById(id)
+        UserEntity usuarioLogado = userService.getUserLogado();
+
+        ConsultaEntity consultaEncontrada = consultaRepository.findById(id)
                 .orElseThrow(() -> new NotFoundBusinessException("Consulta não encontrada"));
+
+        if(usuarioLogado.getTipoUsuario().equals(TipoUsuario.PACIENTE) &&
+                !consultaEncontrada.getPaciente().getId().equals(usuarioLogado.getId())){
+            throw new UnauthorizedAccessBusinessException("Você não tem permissão para acessar essa consulta");
+        }
+        return consultaEncontrada;
     }
 
     public List<ConsultaEntity> findAll(){

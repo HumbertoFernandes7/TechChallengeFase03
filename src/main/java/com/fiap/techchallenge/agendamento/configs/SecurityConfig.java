@@ -27,18 +27,17 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                // Desabilita CSRF, pois usaremos autenticação stateless (via token)
+                // Desabilita CSRF
                 .csrf(AbstractHttpConfigurer::disable)
-
-                // Define a política de sessão como STATELESS (não guarda estado)
                 .sessionManagement(session
                         -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
                 // Configura as regras de autorização
                 .authorizeHttpRequests(auth -> auth
-                        // Permite acesso público aos endpoints de login e criação de usuário
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/users/create").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/graphiql").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/graphql").permitAll()
                         .anyRequest().authenticated()
                 )
 

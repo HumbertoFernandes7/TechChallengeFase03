@@ -1,0 +1,47 @@
+# Define os pontos de entrada (queries)
+type Query {
+    """
+    Lista consultas.
+    - Médicos/Enfermeiros veem tudo.
+    - Pacientes veem apenas as suas.
+    """
+    consultas: [Consulta]
+
+    """
+    Busca uma consulta específica por ID.
+    - Médicos/Enfermeiros veem qualquer uma.
+    - Pacientes só podem ver as suas.
+    """
+    consultaPorId(id: ID!): Consulta
+}
+
+# --- Tipos de Objeto ---
+
+# Representa uma Consulta (baseado no seu ConsultaResponse)
+type Consulta {
+    id: ID!
+    medico: Usuario
+    paciente: Usuario
+    dataConsulta: String
+    status: StatusConsulta
+}
+
+# Representa um Usuário (baseado no seu UserResponse)
+type Usuario {
+    id: ID!
+    nome: String
+    email: String
+    tipoUsuario: TipoUsuario
+}
+
+# --- Enums (devem bater com seus Enums Java) ---
+enum StatusConsulta {
+    AGENDADA
+    REALIZADA
+}
+
+enum TipoUsuario {
+    MEDICO
+    ENFERMEIRO
+    PACIENTE
+}

@@ -57,7 +57,6 @@ public class ConsultaController {
         return ResponseEntity.ok(consultaMapper.toResponse(consultaAtualizada));
     }
 
-    @PreAuthorize("hasAnyRole('MEDICO', 'ENFERMEIRO')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){
         consultaService.findById(id);
