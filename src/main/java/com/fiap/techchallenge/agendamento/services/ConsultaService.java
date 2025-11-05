@@ -24,41 +24,47 @@ public class ConsultaService {
     private final List<ConsultaCreateValidation> validarCadastro;
     private final List<ConsultaUpdateValidation> validarUpdate;
 
+    private final NotificationService notificationService;
+
     @Transactional
-    public ConsultaEntity create(ConsultaEntity consultaEntity, UserEntity medico, UserEntity paciente){
+    public ConsultaEntity create(ConsultaEntity consultaEntity, UserEntity medico, UserEntity paciente) {
         consultaEntity.setMedico(medico);
         consultaEntity.setPaciente(paciente);
         consultaEntity.setStatus(StatusConsulta.AGENDADA);
         validarCadastro.forEach(v -> v.valida(consultaEntity));
-        return consultaRepository.save(consultaEntity);
+        ConsultaEntity consultaSalva = consultaRepository.save(consultaEntity);
+        notificationService.notifica(consultaSalva);
+        return consultaSalva;
     }
 
-    public ConsultaEntity findById(Long id){
+    public ConsultaEntity findById(Long id) {
         UserEntity usuarioLogado = userService.getUserLogado();
 
         ConsultaEntity consultaEncontrada = consultaRepository.findById(id)
                 .orElseThrow(() -> new NotFoundBusinessException("Consulta não encontrada"));
 
-        if(usuarioLogado.getTipoUsuario().equals(TipoUsuario.PACIENTE) &&
-                !consultaEncontrada.getPaciente().getId().equals(usuarioLogado.getId())){
+        if (usuarioLogado.getTipoUsuario().equals(TipoUsuario.PACIENTE) &&
+                !consultaEncontrada.getPaciente().getId().equals(usuarioLogado.getId())) {
             throw new UnauthorizedAccessBusinessException("Você não tem permissão para acessar essa consulta");
         }
         return consultaEncontrada;
     }
 
-    public List<ConsultaEntity> findAll(){
+    public List<ConsultaEntity> findAll() {
         UserEntity usuarioLogado = userService.getUserLogado();
-        if(usuarioLogado.getTipoUsuario() != TipoUsuario.PACIENTE){
+        if (usuarioLogado.getTipoUsuario() != TipoUsuario.PACIENTE) {
             return consultaRepository.findAll();
         }
         return consultaRepository.findAllByPaciente(usuarioLogado);
     }
 
-    public ConsultaEntity update(ConsultaEntity consultaEntity, UserEntity medico, UserEntity paciente){
+    public ConsultaEntity update(ConsultaEntity consultaEntity, UserEntity medico, UserEntity paciente) {
         consultaEntity.setMedico(medico);
         consultaEntity.setPaciente(paciente);
         validarUpdate.forEach(v -> v.valida(consultaEntity));
-        return consultaRepository.save(consultaEntity);
+        ConsultaEntity consultaSalva = consultaRepository.save(consultaEntity);
+        notificationService.notifica(consultaSalva);
+        return consultaSalva;
     }
 
     public void delete(Long id){
