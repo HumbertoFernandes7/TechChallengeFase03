@@ -1,6 +1,8 @@
 package com.fiap.techchallenge.agendamento.services;
 
 import com.fiap.techchallenge.agendamento.entities.UserEntity;
+import com.fiap.techchallenge.agendamento.exception.BadRequestBusinessException;
+import com.fiap.techchallenge.agendamento.exception.NotFoundBusinessException;
 import com.fiap.techchallenge.agendamento.repositories.UserRepository;
 import com.fiap.techchallenge.agendamento.services.validations.user.UserCreateValidation;
 import jakarta.persistence.EntityNotFoundException;
@@ -34,18 +36,18 @@ public class UserService {
     public UserEntity getUserLogado() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth == null || !auth.isAuthenticated() || auth.getName().equals("anonymousUser")) {
-            throw new RuntimeException("Usuário não autenticado. Não é possível realizar esta operação.");
+            throw new BadRequestBusinessException("Usuário não autenticado. Não é possível realizar esta operação.");
         }
         String email = auth.getName();
         return this.findByEmail(email);
     }
 
     public UserEntity findById(Long id){
-        return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado no sistema"));
+        return userRepository.findById(id).orElseThrow(() -> new NotFoundBusinessException("Usuário não encontrado no sistema"));
     }
 
     public UserEntity findByEmail(String email){
-        return userRepository.findByEmail(email).orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado no sistema"));
+        return userRepository.findByEmail(email).orElseThrow(() -> new NotFoundBusinessException("Usuário não encontrado no sistema"));
     }
 
     public List<UserEntity> findAll(){

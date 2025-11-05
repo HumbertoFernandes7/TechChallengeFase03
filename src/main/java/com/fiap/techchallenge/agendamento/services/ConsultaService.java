@@ -4,6 +4,7 @@ import com.fiap.techchallenge.agendamento.entities.ConsultaEntity;
 import com.fiap.techchallenge.agendamento.entities.UserEntity;
 import com.fiap.techchallenge.agendamento.enums.StatusConsulta;
 import com.fiap.techchallenge.agendamento.enums.TipoUsuario;
+import com.fiap.techchallenge.agendamento.exception.NotFoundBusinessException;
 import com.fiap.techchallenge.agendamento.repositories.ConsultaRepository;
 import com.fiap.techchallenge.agendamento.services.validations.consulta.ConsultaCreateValidation;
 import com.fiap.techchallenge.agendamento.services.validations.consulta.ConsultaUpdateValidation;
@@ -34,7 +35,7 @@ public class ConsultaService {
 
     public ConsultaEntity findById(Long id){
         return consultaRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Consulta não encontrada"));
+                .orElseThrow(() -> new NotFoundBusinessException("Consulta não encontrada"));
     }
 
     public List<ConsultaEntity> findAll(){

@@ -1,6 +1,8 @@
 package com.fiap.techchallenge.agendamento.services.validations.consulta;
 
 import com.fiap.techchallenge.agendamento.entities.ConsultaEntity;
+import com.fiap.techchallenge.agendamento.exception.BadRequestBusinessException;
+import com.fiap.techchallenge.agendamento.exception.BusinessException;
 import com.fiap.techchallenge.agendamento.repositories.ConsultaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -16,7 +18,7 @@ public class CreateMedicoLivreNaDataValidation implements ConsultaCreateValidati
     @Override
     public void valida(ConsultaEntity consulta) {
         if (consultaRepository.findByMedicoAndDataConsulta(consulta.getMedico(), consulta.getDataConsulta()).isPresent()){
-            throw new RuntimeException("Já existe uma consulta marcada para este horário e médico");
+            throw new BadRequestBusinessException("Já existe uma consulta marcada para este horário e médico");
         }
     }
 }

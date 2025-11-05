@@ -1,6 +1,7 @@
 package com.fiap.techchallenge.agendamento.services.validations.consulta;
 
 import com.fiap.techchallenge.agendamento.entities.ConsultaEntity;
+import com.fiap.techchallenge.agendamento.exception.BadRequestBusinessException;
 import com.fiap.techchallenge.agendamento.repositories.ConsultaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -20,7 +21,7 @@ public class UpdatePacienteLivreNaDataValidation implements ConsultaUpdateValida
         Optional<ConsultaEntity> consultaEncontrada = consultaRepository.findByPacienteAndDataConsulta(consulta.getPaciente(), dataConsulta);
         if(consultaEncontrada.isPresent() &&
                 !consultaEncontrada.get().getId().equals(consulta.getId())){
-            throw new RuntimeException("Já existe uma consulta marcada para este horário e paciente");
+            throw new BadRequestBusinessException("Já existe uma consulta marcada para este horário e paciente");
         }
     }
 }

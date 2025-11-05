@@ -5,6 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.fiap.techchallenge.agendamento.entities.UserEntity;
+import com.fiap.techchallenge.agendamento.exception.BadRequestBusinessException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,7 @@ public class TokenService {
                     .withExpiresAt(geraDataExpiracaoToken())
                     .sign(algorithm);
         } catch (JWTCreationException exception){
-            throw new RuntimeException("Erro ao gerar token JWT", exception);
+            throw new BadRequestBusinessException("Erro ao gerar token JWT");
         }
     }
 
