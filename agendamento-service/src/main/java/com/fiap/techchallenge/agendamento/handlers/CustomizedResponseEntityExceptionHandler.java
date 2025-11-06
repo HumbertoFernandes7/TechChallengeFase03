@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import org.springframework.security.access.AccessDeniedException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,6 +39,16 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
             UnauthorizedAccessBusinessException ex, WebRequest request) {
         ProblemExceptionOutput problema = new ProblemExceptionOutput(HttpStatus.UNAUTHORIZED.value(), ex.getMessage());
         return new ResponseEntity<ProblemExceptionOutput>(problema, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public final ResponseEntity<ProblemExceptionOutput> handleAccessDeniedException(
+            AccessDeniedException ex, WebRequest request) {
+        ProblemExceptionOutput problema = new ProblemExceptionOutput(
+                HttpStatus.FORBIDDEN.value(),
+                "Acesso negado. Você não tem permissão para executar esta ação."
+        );
+        return new ResponseEntity<>(problema, HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(InvalidCredentialsBusinessException.class)
