@@ -28,7 +28,7 @@ public class EmailService {
             SimpleMailMessage mensagem = new SimpleMailMessage();
             mensagem.setFrom("hnino201333@gmail.com");
             mensagem.setTo(notificacaoDTO.getEmailPaciente());
-            mensagem.setSubject("Lembre de consulta");
+            mensagem.setSubject(notificacaoDTO.getMensagemNotificacao());
             mensagem.setText(corpoEmail);
 
             mailSender.send(mensagem);

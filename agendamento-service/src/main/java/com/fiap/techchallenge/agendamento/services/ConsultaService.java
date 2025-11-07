@@ -33,7 +33,8 @@ public class ConsultaService {
         consultaEntity.setStatus(StatusConsulta.AGENDADA);
         validarCadastro.forEach(v -> v.valida(consultaEntity));
         ConsultaEntity consultaSalva = consultaRepository.save(consultaEntity);
-        notificationService.notifica(consultaSalva);
+        String mensagem = "Uma nova consulta foi agendada!";
+        notificationService.notifica(consultaSalva, mensagem);
         return consultaSalva;
     }
 
@@ -63,7 +64,8 @@ public class ConsultaService {
         consultaEntity.setPaciente(paciente);
         validarUpdate.forEach(v -> v.valida(consultaEntity));
         ConsultaEntity consultaSalva = consultaRepository.save(consultaEntity);
-        notificationService.notifica(consultaSalva);
+        String mensagem = "Uma consulta foi alterada!";
+        notificationService.notifica(consultaSalva, mensagem);
         return consultaSalva;
     }
 

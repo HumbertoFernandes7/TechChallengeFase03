@@ -20,5 +20,5 @@ public class NotificacaoDTO implements Serializable {
     private String nomeMedico;
     private LocalDateTime dataHoraConsulta;
     private StatusConsulta status;
-
+    private String mensagemNotificacao;
 }

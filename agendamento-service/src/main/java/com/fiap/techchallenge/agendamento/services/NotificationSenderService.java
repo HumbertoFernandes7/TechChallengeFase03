@@ -19,14 +19,15 @@ public class NotificationSenderService {
     private final RabbitTemplate rabbitTemplate;
 
     @Async
-    public void notifica(ConsultaEntity consulta) {
+    public void notifica(ConsultaEntity consulta, String mensagemNotificacao) {
         try {
             NotificacaoDTO notificacao = new NotificacaoDTO(
                     consulta.getPaciente().getEmail(),
                     consulta.getPaciente().getNome(),
                     consulta.getMedico().getNome(),
                     consulta.getDataConsulta(),
-                    consulta.getStatus()
+                    consulta.getStatus(),
+                    mensagemNotificacao
             );
             // Envia a mensagem para a fila
             rabbitTemplate.convertAndSend(CONSULTA_QUEUE_NAME, notificacao);
