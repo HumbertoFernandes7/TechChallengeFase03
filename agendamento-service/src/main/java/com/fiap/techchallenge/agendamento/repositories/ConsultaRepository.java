@@ -15,4 +15,12 @@ public interface ConsultaRepository extends JpaRepository<ConsultaEntity, Long> 
     Optional<ConsultaEntity> findByPacienteAndDataConsulta(UserEntity paciente, LocalDateTime dataConsulta);
 
     List<ConsultaEntity> findAllByPaciente(UserEntity paciente);
+
+    List<ConsultaEntity> findAllByDataConsultaAfter(LocalDateTime data);
+
+    List<ConsultaEntity> findAllByDataConsultaBefore(LocalDateTime data);
+
+    List<ConsultaEntity> findAllByPacienteAndDataConsultaAfter(UserEntity paciente, LocalDateTime data);
+
+    List<ConsultaEntity> findAllByPacienteAndDataConsultaBefore(UserEntity paciente, LocalDateTime data);
 }

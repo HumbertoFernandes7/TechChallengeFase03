@@ -4,8 +4,12 @@ type Query {
     Lista consultas.
     - Médicos/Enfermeiros veem tudo.
     - Pacientes veem apenas as suas.
+    - Permite filtro booleano:
+      - futuras: true (apenas futuras)
+      - futuras: false (apenas passadas)
+      - (sem argumento): todas
     """
-    consultas: [Consulta]
+    consultas(futuras: Boolean): [Consulta]
 
     """
     Busca uma consulta específica por ID.
@@ -17,7 +21,7 @@ type Query {
 
 # --- Tipos de Objeto ---
 
-# Representa uma Consulta (baseado no seu ConsultaResponse)
+# Representa uma Consulta (baseado no ConsultaResponse)
 type Consulta {
     id: ID!
     medico: Usuario
@@ -26,7 +30,7 @@ type Consulta {
     status: StatusConsulta
 }
 
-# Representa um Usuário (baseado no seu UserResponse)
+# Representa um Usuário (baseado no UserResponse)
 type Usuario {
     id: ID!
     nome: String
@@ -34,7 +38,7 @@ type Usuario {
     tipoUsuario: TipoUsuario
 }
 
-# --- Enums (devem bater com seus Enums Java) ---
+# --- Enums ---
 enum StatusConsulta {
     AGENDADA
     REALIZADA

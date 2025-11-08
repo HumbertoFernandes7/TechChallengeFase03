@@ -22,8 +22,8 @@ public class ConsultaGraphQLController {
     private final ConsultaMapper consultaMapper;
 
     @QueryMapping
-    public List<ConsultaResponse> consultas() {
-      List<ConsultaEntity> consultasEncontradas = consultaService.findAll();
+    public List<ConsultaResponse> consultas(@Argument Boolean futuras) {
+        List<ConsultaEntity> consultasEncontradas = consultaService.findAll(futuras);
         return consultaMapper.listEntityToListResponse(consultasEncontradas);
     }
 

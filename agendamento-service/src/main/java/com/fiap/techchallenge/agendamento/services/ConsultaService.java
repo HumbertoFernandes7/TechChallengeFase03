@@ -13,6 +13,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -52,11 +53,38 @@ public class ConsultaService {
     }
 
     public List<ConsultaEntity> findAll() {
+        return findAll(null);
+    }
+
+    public List<ConsultaEntity> findAll(Boolean futuras) {
         UserEntity usuarioLogado = userService.getUserLogado();
-        if (usuarioLogado.getTipoUsuario() != TipoUsuario.PACIENTE) {
-            return consultaRepository.findAll();
+        LocalDateTime agora = LocalDateTime.now();
+
+        // 1. Filtro nulo (retorna todas)
+        if (futuras == null) {
+            if (usuarioLogado.getTipoUsuario() != TipoUsuario.PACIENTE) {
+                return consultaRepository.findAll();
+            } else {
+                return consultaRepository.findAllByPaciente(usuarioLogado);
+            }
         }
-        return consultaRepository.findAllByPaciente(usuarioLogado);
+
+        // 2. Filtro de Futuras (futuras: true)
+        if (futuras) {
+            if (usuarioLogado.getTipoUsuario() != TipoUsuario.PACIENTE) {
+                return consultaRepository.findAllByDataConsultaAfter(agora);
+            } else {
+                return consultaRepository.findAllByPacienteAndDataConsultaAfter(usuarioLogado, agora);
+            }
+        }
+        // 3. Filtro de Passadas (futuras: false)
+        else {
+            if (usuarioLogado.getTipoUsuario() != TipoUsuario.PACIENTE) {
+                return consultaRepository.findAllByDataConsultaBefore(agora);
+            } else {
+                return consultaRepository.findAllByPacienteAndDataConsultaBefore(usuarioLogado, agora);
+            }
+        }
     }
 
     public ConsultaEntity update(ConsultaEntity consultaEntity, UserEntity medico, UserEntity paciente) {

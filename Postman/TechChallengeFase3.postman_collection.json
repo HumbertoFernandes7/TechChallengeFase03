@@ -1,0 +1,358 @@
+{
+	"info": {
+		"_postman_id": "57f7f2f5-4720-402e-b4a0-3eccd1ea89ab",
+		"name": "TechChallengeFase3",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22746679",
+		"_collection_link": "https://blue-water-108843.postman.co/workspace/P%C3%B3s-FIAP~890527fe-85c4-4c8e-acd3-34250c833187/collection/22746679-57f7f2f5-4720-402e-b4a0-3eccd1ea89ab?action=share&source=collection_link&creator=22746679"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"danilo@email.com\",\r\n    \"senha\": \"123456789\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/auth/login",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "POST user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Humberto Fernandes\",\r\n    \"email\": \"humbertofernandes08@hotmail.com\",\r\n    \"senha\": \"123456789\",\r\n    \"tipoUsuario\": \"PACIENTE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/users/create",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"users",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhZ2VuZGFtZW50by1hcGkiLCJzdWIiOiJodW1iZXJ0b0BlbWFpbC5jb20iLCJleHAiOjE3NjIyNzc1NzJ9.hgt96wzsM0Z37JRJGIYdn_jqRti1MrZR5TfmALZ5fno",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/users/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET ALL users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhZ2VuZGFtZW50by1hcGkiLCJzdWIiOiJodW1iZXJ0b0BlbWFpbC5jb20iLCJleHAiOjE3NjIyNzc1NzJ9.hgt96wzsM0Z37JRJGIYdn_jqRti1MrZR5TfmALZ5fno",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/users",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhZ2VuZGFtZW50by1hcGkiLCJzdWIiOiJkYW5pbG9AaG90bWFpbC5jb20iLCJleHAiOjE3NjI2MzQxMzN9.XrAmR3ZJndIGsDBKACpSC92YfVhdGjnsH85eIbrFRvE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"humberto fernandes alterado\",\r\n    \"email\": \"humbertofernandes08@hotmail.com\",\r\n    \"tipoUsuario\": \"ENFERMEIRO\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/users/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhZ2VuZGFtZW50by1hcGkiLCJzdWIiOiJodW1iZXJ0b0BlbWFpbC5jb20iLCJleHAiOjE3NjIyNzc1NzJ9.hgt96wzsM0Z37JRJGIYdn_jqRti1MrZR5TfmALZ5fno",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/users/2",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"users",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Consulta",
+			"item": [
+				{
+					"name": "POST consulta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhZ2VuZGFtZW50by1hcGkiLCJzdWIiOiJkYW5pbG9AaG90bWFpbC5jb20iLCJleHAiOjE3NjI2MzUyMDR9.vwr0_n-I7yyHCzILNpCgYl4wsMJV9QQ58lfrxMDIGWA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idMedico\": 2,\r\n    \"idPaciente\": 1,\r\n    \"dataConsulta\": \"2026-11-23T15:30:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/consultas/create",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"consultas",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Consulta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhZ2VuZGFtZW50by1hcGkiLCJzdWIiOiJodW1iZXJ0b0BlbWFpbC5jb20iLCJleHAiOjE3NjI0NTk2Mjl9.FUNoTafcd9KKVccdD1zGu8QsVUabVI3_cRCikGIJkTo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/consultas/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"consultas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET ALL consultas",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhZ2VuZGFtZW50by1hcGkiLCJzdWIiOiJkYW5pbG9AaG90bWFpbC5jb20iLCJleHAiOjE3NjI2MzQxMzN9.XrAmR3ZJndIGsDBKACpSC92YfVhdGjnsH85eIbrFRvE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/consultas",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"consultas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT consulta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhZ2VuZGFtZW50by1hcGkiLCJzdWIiOiJkYW5pbG9AaG90bWFpbC5jb20iLCJleHAiOjE3NjI2MzUyMDR9.vwr0_n-I7yyHCzILNpCgYl4wsMJV9QQ58lfrxMDIGWA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idMedico\": 2,\r\n    \"idPaciente\": 1,\r\n    \"dataConsulta\": \"2025-11-21T15:35:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/consultas/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"consultas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Realizar consulta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhZ2VuZGFtZW50by1hcGkiLCJzdWIiOiJkYW5pbG9AaG90bWFpbC5jb20iLCJleHAiOjE3NjI2MzUyMDR9.vwr0_n-I7yyHCzILNpCgYl4wsMJV9QQ58lfrxMDIGWA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/consultas/1/realizar",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"consultas",
+								"1",
+								"realizar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
